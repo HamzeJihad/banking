@@ -1,0 +1,8 @@
+name: banking
+publish_to: none
+environment: 
+  sdk: ^3.8.0
+workspace: 
+  - backend
+  - frontend
+  
