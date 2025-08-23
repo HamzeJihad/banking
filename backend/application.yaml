@@ -21,6 +21,15 @@ storage:
     projectId: 'my-project'
     apiKey: 'my_api'
 
+
+security:
+  secret: AisuSijfdiflkDkldkeokdokDKodk
+  tokenValidity: 3600
+  refreshTokenValidity: 604800
+  issuer: "vaden"
+  audiences:
+    - "vaden"
+
 env:
   mode: debug
 
