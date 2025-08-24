@@ -83,9 +83,19 @@ class ProductRepository implements IProductRepository {
 }
 ```
 
-> Deve criar testes de unidade para cada método do repository. Veja a seção de Teste de Unidade
+> Deve criar testes de unidade para cada método do repository. Veja a seção de Teste de Unidade.
 
 ### Testes de Unidade
 
 Usa forma padrão de testes usando Dart usando as funções `test()`, `group()`.
 > Crie Fakes ao inves de Mocks.
+
+## Packages externos
+
+### Dart Vaden
+
+Framework de backend inspirado no SpringBoot.
+
+### Drift
+
+Package para acesso a base de dados tanto postgres quanto SQLITE.
