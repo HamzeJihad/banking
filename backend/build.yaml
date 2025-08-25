@@ -3,4 +3,9 @@ targets:
     builders:
       vaden_class_scanner|aggregating_vaden_builder:
         enabled: true
+      drift_dev:
+        options:
+          sql:
+            dialects:
+              - postgres
 
