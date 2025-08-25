@@ -1,11 +1,11 @@
 
 class ChangePasswordDto {
-  final String code;
+  final int userId;
   final String oldPassword;
   final String newPassword;
 
   ChangePasswordDto({
-    required this.code,
+    required this.userId,
     required this.oldPassword,
     required this.newPassword,
   });

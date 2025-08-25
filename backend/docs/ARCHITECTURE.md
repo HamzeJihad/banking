@@ -79,7 +79,7 @@ Deverá ser criado uma Interface como contrato servindo de dominio e deverá cri
 
 ```dart
 @Repository()
-class ProductRepository implements IProductRepository {
+class ProductRepositoryImpl implements ProductRepository {
 }
 ```
 

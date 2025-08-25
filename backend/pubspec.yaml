@@ -22,4 +22,5 @@ dependencies:
 dev_dependencies:
   build_runner: ^2.4.14
   drift_dev: ^2.28.0
+  test: ^1.25.15
   vaden_class_scanner: ^0.1.3
