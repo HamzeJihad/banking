@@ -18,6 +18,7 @@ class SecurityConfiguration {
     return HttpSecurity([
       RequestMatcher('/auth/**').permitAll(),
       RequestMatcher('/docs/**').permitAll(),
+      RequestMatcher('/users/**').permitAll(),
       AnyRequest().authenticated(),
     ]);
   }

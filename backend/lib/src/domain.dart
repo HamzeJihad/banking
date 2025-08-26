@@ -6,6 +6,9 @@ export 'domain/dtos/extract_dto.dart';
 export 'domain/dtos/request_extract_dto.dart';
 export 'domain/dtos/request_transfer_dto.dart';
 export 'domain/dtos/response_extract_dto.dart';
+export 'domain/dtos/user_dto.dart';
+
+
 
 // Entities exports
 export 'domain/entities/transaction_entity.dart';

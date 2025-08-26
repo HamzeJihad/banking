@@ -10,7 +10,7 @@ class OpenApiConfiguration {
     return OpenApi(
       version: '3.0.0',
       info: Info(
-        title: 'Vaden API',
+        title: 'Banking API',
         version: '1.0.0',
         description: 'Vaden Backend example',
       ),
