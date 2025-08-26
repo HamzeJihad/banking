@@ -2,6 +2,7 @@ import 'package:backend/config/drift/drift_configuration.dart';
 import 'package:backend/src/data/extensions/user_extesion.dart';
 import 'package:backend/src/data/extensions/wallet_extension.dart';
 import 'package:backend/src/domain.dart';
+import 'package:backend/src/utils/response_error.dart';
 import 'package:decimal/decimal.dart';
 import 'package:drift/drift.dart';
 import 'package:vaden/vaden.dart';
@@ -21,9 +22,13 @@ class WalletRepositoryImpl implements WalletRepository {
     return walletData.toEntity(userData.toEntity());
   }
 
+
   @override
   Future<WalletEntity> getById(int id) async {
-    final walletData = await database.managers.walletTable.filter((e) => e.id.equals(id)).getSingle();
+    final walletData = await database.managers.walletTable.filter((e) => e.id.equals(id)).getSingleOrNull();
+    if (walletData == null) {
+      throw ResponseError.notFound('Wallet not found');
+    }
     final userData = await database.managers.userTable
         .filter((e) => e.id.equals(walletData.userId))
         .getSingle();
@@ -31,7 +36,7 @@ class WalletRepositoryImpl implements WalletRepository {
   }
 
   @override
-  Future<List<ResponseExtractDto>> getExtracts(RequestExtractDto requestExtract) async {
+  Future<ResponseExtractDto> getExtracts(RequestExtractDto requestExtract) async {
     final pageSize = 10;
     final offset = (requestExtract.page - 1) * pageSize;
 
@@ -82,16 +87,13 @@ class WalletRepositoryImpl implements WalletRepository {
     if (extracts.length == pageSize) {
       nextPage = requestExtract.page + 1;
     }
-
-    // The interface specifies a List<ResponseExtractDto>, which seems unusual.
-    // Returning a list with a single response object to match the interface.
     final response = ResponseExtractDto(
       extracts: extracts,
       currentPage: requestExtract.page,
       nextPage: nextPage,
     );
 
-    return [response];
+    return response;
   }
 
   @override
@@ -107,7 +109,7 @@ class WalletRepositoryImpl implements WalletRepository {
       final fromBalance = Decimal.parse(fromWallet.balance);
 
       if (fromBalance < requestTransfer.amount) {
-        throw Exception('Insufficient funds');
+        throw ResponseError.badRequest('Insufficient balance');
       }
 
       final newFromBalance = fromBalance - requestTransfer.amount;

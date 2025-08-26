@@ -1,5 +1,7 @@
 enum UserRole { admin, user, guest }
 
+
+
 class UserEntity {
   final int id;
   final String name;

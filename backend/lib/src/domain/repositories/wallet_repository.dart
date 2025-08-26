@@ -7,5 +7,5 @@ abstract class WalletRepository {
   Future<WalletEntity> createWallet(int userId);
   Future<WalletEntity> getById(int id);
   Future<void> transfer(RequestTransferDto requestTransfer );
-  Future<List<ResponseExtractDto>> getExtracts(RequestExtractDto requestExtract);
+  Future<ResponseExtractDto> getExtracts(RequestExtractDto requestExtract);
 }

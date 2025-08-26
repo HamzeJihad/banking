@@ -1,4 +1,7 @@
 include: package:lints/recommended.yaml
+analyzer:
+  errors:
+    type_literal_in_constant_pattern: ignore
 
 # Uncomment the following section to specify additional rules.
 

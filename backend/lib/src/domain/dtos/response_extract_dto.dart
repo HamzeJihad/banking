@@ -1,7 +1,10 @@
 
 
 import 'package:backend/src/domain/dtos/extract_dto.dart';
+import 'package:vaden/vaden.dart';
 
+
+@DTO()
 class ResponseExtractDto {
   final List<ExtractDto> extracts;
   final int currentPage;

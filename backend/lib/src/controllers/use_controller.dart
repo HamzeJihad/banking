@@ -1,4 +1,6 @@
+import 'package:backend/config/security/user_details_service.dart';
 import 'package:backend/src/domain.dart';
+import 'package:backend/src/utils/response_message.dart';
 import 'package:vaden/vaden.dart';
 
 @Api(tag: 'users', description: 'Operations related to users')
@@ -20,5 +22,30 @@ class UseController {
     return UserDto.fromEntity(createdUser);
   }
 
- 
+  @ApiOperation(summary: 'Get user by ID', description: 'Retrieves a user by their ID')
+  @ApiResponse(
+    200,
+    description: 'User retrieved successfully',
+    content: ApiContent(type: 'json/application', schema: UserDto),
+  )
+  @Get('/<id>')
+  Future<UserDto> getUserById(@Param('id') int id) async {
+    final user = await repository.getUserById(id);
+    return UserDto.fromEntity(user);
+  }
+
+
+
+  @ApiOperation(summary: 'Change user password', description: 'Changes the password for a user')
+  @ApiResponse(
+    200,
+    description: 'Password changed successfully',
+  )
+  @Post('/change-password')
+  Future<ResponseMessage> changePassword(@Body() ChangePasswordDto changePassword,
+  @Context() User user,
+  ) async {
+    await repository.changePassword(user.id, changePassword);
+    return ResponseMessage('Password changed successfully');
+  }
 }

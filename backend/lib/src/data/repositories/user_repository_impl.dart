@@ -2,6 +2,8 @@ import 'package:backend/config/drift/drift_configuration.dart';
 import 'package:backend/src/data/extensions/create_user_dto_extension.dart';
 import 'package:backend/src/data/extensions/user_extesion.dart';
 import 'package:backend/src/domain.dart';
+import 'package:backend/src/utils/response_error.dart';
+import 'package:drift/drift.dart';
 import 'package:vaden/vaden.dart';
 import 'package:vaden_security/vaden_security.dart';
 
@@ -29,4 +31,35 @@ class UserRepositoryImpl implements UserRepository {
     final user = await database.managers.userTable.filter((e) => e.id.equals(id)).getSingleOrNull();
     return user!.toEntity();
   }
+  
+  @override
+  Future<UserEntity?> getUserByEmail(String email) {
+    return database.managers.userTable.filter((e) => e.email.equals(email)).getSingleOrNull().then((user) => user?.toEntity());
+  }
+
+
+  @override
+  Future<void> changePassword(int userId, ChangePasswordDto changePassword) async {
+    return database.transaction(() async {
+      final user = await database.managers.userTable
+          .filter((e) => e.id.equals(userId))
+          .getSingleOrNull();
+
+      if (user == null) {
+        throw ResponseError.notFound('User not found');
+      }
+
+      final isValid = passwordEncoder.matches(changePassword.oldPassword, user.password);
+      if (!isValid) {
+        throw ResponseError.unauthorized('Invalid old password');
+      }
+
+      final newPasswordHash = passwordEncoder.encode(changePassword.newPassword);
+
+      await database.managers.userTable.filter((e) => e.id.equals(userId)).update((e) {
+        return e(password: Value(newPasswordHash), updatedAt: Value(DateTime.now()));
+      });
+    });
+  }
+
 }

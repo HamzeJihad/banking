@@ -4,6 +4,14 @@ openapi:
   description: API gerada automaticamente pelo Vaden.
   enable: true
 
+
+database:
+  host: localhost
+  port: 5432
+  username: banking_master
+  password: banking_master
+  name: banking
+
 server:
   port: 8080
   host: localhost

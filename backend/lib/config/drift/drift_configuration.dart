@@ -48,13 +48,13 @@ class AppDatabase extends _$AppDatabase {
 @Configuration()
 class DriftConfiguration {
   @Bean()
-  QueryExecutor createQueryExecutor() {
+  QueryExecutor createQueryExecutor(ApplicationSettings settings) {
     return PgDatabase(
       endpoint: pg.Endpoint(
-        host: 'localhost',
-        database: 'database',
-        username: 'dart',
-        password: 'mysecurepassword',
+        host: settings['database']['host'],
+        database: settings['database']['name'],
+        username: settings['database']['username'],
+        password: settings['database']['password']  ,
       ),
     );
   }

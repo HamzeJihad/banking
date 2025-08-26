@@ -1,7 +1,7 @@
 import 'package:backend/src/domain/entities/user_entity.dart';
 import 'package:vaden/vaden.dart';
 
-
+export 'package:backend/src/domain/entities/user_entity.dart';
 
 @DTO()
 class CreateUserDto {
