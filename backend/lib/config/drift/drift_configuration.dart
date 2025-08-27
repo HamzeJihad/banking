@@ -1,35 +1,36 @@
 import 'package:drift/drift.dart';
-import 'package:vaden/vaden.dart';
 import 'package:drift_postgres/drift_postgres.dart';
 import 'package:postgres/postgres.dart' as pg;
+import 'package:postgres/postgres.dart';
+import 'package:vaden/vaden.dart';
 
 part 'drift_configuration.g.dart';
 
 class UserTable extends Table {
-  late final id = integer().autoIncrement()();
-  late final name = text()();
-  late final email = text()();
-  late final password = text()();
-  late final role = text()();
-  late final createdAt = dateTime().withDefault(currentDateAndTime)();
-  late final updatedAt = dateTime().withDefault(currentDateAndTime)();
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get name => text()();
+  TextColumn get email => text().unique()();
+  TextColumn get password => text()();
+  TextColumn get role => text()();
+  DateTimeColumn get createdAt => dateTime().clientDefault(() => DateTime.now())();
+  DateTimeColumn get updatedAt => dateTime().clientDefault(() => DateTime.now())();
 }
 
 class WalletTable extends Table {
-  late final id = integer().autoIncrement()();
-  late final userId = integer().references(UserTable, #id)();
-  late final balance = text()();
-  late final createdAt = dateTime().withDefault(currentDateAndTime)();
-  late final updatedAt = dateTime().withDefault(currentDateAndTime)();
+  IntColumn get id => integer().autoIncrement()();
+  IntColumn get userId => integer().references(UserTable, #id)();
+  TextColumn get balance => text()();
+  DateTimeColumn get createdAt => dateTime().clientDefault(() => DateTime.now())();
+  DateTimeColumn get updatedAt => dateTime().clientDefault(() => DateTime.now())();
 }
 
 class TransactionTable extends Table {
-  late final id = integer().autoIncrement()();
-  late final userId = integer().references(UserTable, #id)();
-  late final toWalletId = integer().references(WalletTable, #id)();
-  late final fromWalletId = integer().references(WalletTable, #id)();
-  late final amount = text()();
-  late final createdAt = dateTime().withDefault(currentDateAndTime)();
+  IntColumn get id => integer().autoIncrement()();
+  IntColumn get userId => integer().references(UserTable, #id)();
+  IntColumn get toWalletId => integer().references(WalletTable, #id)();
+  IntColumn get fromWalletId => integer().references(WalletTable, #id)();
+  TextColumn get amount => text()();
+  DateTimeColumn get createdAt => dateTime().clientDefault(() => DateTime.now())();
 }
 
 @DriftDatabase(tables: [UserTable, WalletTable, TransactionTable])
@@ -38,24 +39,31 @@ class AppDatabase extends _$AppDatabase {
 
   @override
   int get schemaVersion => 1;
-
-  @Bean()
-  AppDatabase createAppDatabase(QueryExecutor executor) {
-    return AppDatabase(executor);
-  }
 }
 
 @Configuration()
 class DriftConfiguration {
   @Bean()
-  QueryExecutor createQueryExecutor(ApplicationSettings settings) {
+  Future<QueryExecutor> nativeDatabase(ApplicationSettings settings) async {
+    final database = settings['database'];
+    final endpoint = pg.Endpoint(
+      host: database['host'],
+      port: database['port'],
+      database: database['name'],
+      username: database['username'],
+      password: database['password'],
+    );
+    
     return PgDatabase(
-      endpoint: pg.Endpoint(
-        host: settings['database']['host'],
-        database: settings['database']['name'],
-        username: settings['database']['username'],
-        password: settings['database']['password']  ,
+      endpoint: endpoint,
+      settings: const ConnectionSettings(
+        sslMode: pg.SslMode.disable,
       ),
     );
+  }
+
+  @Bean()
+  AppDatabase createAppDatabase(QueryExecutor executor) {
+    return AppDatabase(executor);
   }
 }

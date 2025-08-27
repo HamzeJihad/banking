@@ -19,8 +19,8 @@ class WalletController {
   @ApiOperation(summary: 'Get wallet by user ID')
   @ApiResponse(200, content: ApiContent(type: 'json/application', schema: WalletDto))
   @Get('/byUser')
-  Future<WalletDto> getWalletsByUserId(@Context() User userDetails) async {
-    final wallets = await walletRepository.getById(userDetails.id);
+  Future<WalletDto> getWalletsByUserId(@Context() User user) async {
+    final wallets = await walletRepository.getById(user.id);
     return WalletDto.fromEntity(wallets);
   }
 

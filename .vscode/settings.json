@@ -1,7 +1,6 @@
 {
   "breadcrumbs.enabled": false,
   "editor.glyphMargin": false,
-  "editor.lineNumbers": "off",
   "files.eol": "\n",
   "workbench.editor.labelFormat": "short",
   "editor.tabSize": 2,
