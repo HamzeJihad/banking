@@ -2,7 +2,7 @@ import 'package:backend/src/domain/entities/user_entity.dart';
 import 'package:decimal/decimal.dart';
 
 class WalletEntity {
-  final String id;
+  final int id;
   final UserEntity user;
   final Decimal balance;
   final DateTime createdAt;

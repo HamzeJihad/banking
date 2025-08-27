@@ -97,11 +97,11 @@ class WalletRepositoryImpl implements WalletRepository {
   }
 
   @override
-  Future<void> transfer(RequestTransferDto requestTransfer) {
+  Future<void> transfer(int fromWalletId, RequestTransferDto requestTransfer) {
     return database.transaction(() async {
       final fromWallet = await (database.select(
         database.walletTable,
-      )..where((tbl) => tbl.id.equals(requestTransfer.fromWalletId))).getSingle();
+      )..where((tbl) => tbl.id.equals(fromWalletId))).getSingle();
       final toWallet = await (database.select(
         database.walletTable,
       )..where((tbl) => tbl.id.equals(requestTransfer.toWalletId))).getSingle();
@@ -117,7 +117,7 @@ class WalletRepositoryImpl implements WalletRepository {
 
       await (database.update(
         database.walletTable,
-      )..where((tbl) => tbl.id.equals(requestTransfer.fromWalletId))).write(
+      )..where((tbl) => tbl.id.equals(fromWalletId))).write(
         WalletTableCompanion(
           balance: Value(newFromBalance.toStringAsFixed(2)),
           updatedAt: Value(DateTime.now()),
@@ -138,7 +138,7 @@ class WalletRepositoryImpl implements WalletRepository {
           .insert(
             TransactionTableCompanion.insert(
               userId: fromWallet.userId,
-              fromWalletId: requestTransfer.fromWalletId,
+              fromWalletId: fromWalletId,
               toWalletId: requestTransfer.toWalletId,
               amount: requestTransfer.amount.toString(),
             ),

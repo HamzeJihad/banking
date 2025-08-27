@@ -28,8 +28,12 @@ class WalletController {
   @ApiOperation(summary: 'Transfer funds between wallets')
   @ApiResponse(200, content: ApiContent(type: 'json/application', schema: ResponseMessage))
   @Post('/transfer')
-  Future<ResponseMessage> transferFunds(@Body() RequestTransferDto requestTransfer) async {
-    await walletRepository.transfer(requestTransfer);
+  Future<ResponseMessage> transferFunds(@Body() RequestTransferDto requestTransfer,
+  @Context() User user 
+  ) async {
+    final wallet = await walletRepository.getById(user.id);
+
+    await walletRepository.transfer(wallet.id, requestTransfer);
     return ResponseMessage('Transfer successful');
   }
 

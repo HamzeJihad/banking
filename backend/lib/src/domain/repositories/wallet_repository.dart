@@ -6,6 +6,6 @@ import 'package:backend/src/domain/entities/wallet_entity.dart';
 abstract class WalletRepository {
   Future<WalletEntity> createWallet(int userId);
   Future<WalletEntity> getById(int id);
-  Future<void> transfer(RequestTransferDto requestTransfer );
+  Future<void> transfer(int fromWalletId, RequestTransferDto requestTransfer );
   Future<ResponseExtractDto> getExtracts(RequestExtractDto requestExtract);
 }

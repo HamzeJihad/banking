@@ -5,7 +5,7 @@ import 'package:decimal/decimal.dart';
 extension WalletTableDataExtension on WalletTableData {
   WalletEntity toEntity(UserEntity user) {
     return WalletEntity(
-      id: id.toString(),
+      id: id,
       user: user,
       balance: Decimal.parse(balance),
       createdAt: createdAt,

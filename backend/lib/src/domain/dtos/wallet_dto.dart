@@ -8,10 +8,10 @@ export 'package:backend/src/domain/parses/decimal_parse.dart';
 
 @DTO()
 class WalletDto {
-  final String id;
+  final int id;
   @UseParse(DecimalParse)
   final Decimal balance;
-  final String userId;
+  final int userId;
 
   WalletDto({
     required this.id,
