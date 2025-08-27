@@ -1,11 +1,10 @@
 import 'package:backend/config/drift/drift_configuration.dart';
 import 'package:backend/src/data/extensions/create_user_dto_extension.dart';
 import 'package:backend/src/data/extensions/user_extesion.dart';
-import 'package:backend/src/domain.dart';
 import 'package:backend/src/utils/response_error.dart';
 import 'package:drift/drift.dart';
-import 'package:vaden/vaden.dart';
 import 'package:vaden_security/vaden_security.dart';
+import 'package:domain/domain.dart';
 
 @Repository()
 class UserRepositoryImpl implements UserRepository {

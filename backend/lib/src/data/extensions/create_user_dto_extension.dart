@@ -1,6 +1,7 @@
 import 'package:backend/config/drift/drift_configuration.dart';
-import 'package:backend/src/domain.dart';
 import 'package:drift/drift.dart';
+import 'package:domain/domain.dart';
+
 
 extension CreateUserDtoExtension on CreateUserDto {
   UserTableCompanion toCompanion(String passwordHash) {

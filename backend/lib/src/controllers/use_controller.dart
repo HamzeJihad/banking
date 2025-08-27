@@ -1,7 +1,6 @@
 import 'package:backend/config/security/user_details_service.dart';
-import 'package:backend/src/domain.dart';
 import 'package:backend/src/utils/response_message.dart';
-import 'package:vaden/vaden.dart';
+import 'package:domain/domain.dart';
 
 @Api(tag: 'users', description: 'Operations related to users')
 @Controller('/users')

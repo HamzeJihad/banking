@@ -1,6 +1,6 @@
-import 'package:vaden/vaden.dart';
+import 'package:domain/domain.dart';
 import 'package:vaden_security/vaden_security.dart';
 
-@VadenModule([VadenSecurity])
+@VadenModule([VadenSecurity, DomainModule])
 class AppModule {}
 

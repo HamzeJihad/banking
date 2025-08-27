@@ -1,11 +1,9 @@
 import 'package:backend/config/drift/drift_configuration.dart';
 import 'package:backend/src/data/extensions/user_extesion.dart';
 import 'package:backend/src/data/extensions/wallet_extension.dart';
-import 'package:backend/src/domain.dart';
+import 'package:domain/domain.dart';
 import 'package:backend/src/utils/response_error.dart';
-import 'package:decimal/decimal.dart';
 import 'package:drift/drift.dart';
-import 'package:vaden/vaden.dart';
 
 @Repository()
 class WalletRepositoryImpl implements WalletRepository {

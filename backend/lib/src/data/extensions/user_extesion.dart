@@ -1,5 +1,5 @@
 
-import 'package:backend/src/domain.dart';
+import 'package:domain/domain.dart';
 
 import '../../../config/drift/drift_configuration.dart';
 

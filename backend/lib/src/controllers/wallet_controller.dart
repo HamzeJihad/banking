@@ -1,10 +1,8 @@
 
 
 import 'package:backend/config/security/user_details_service.dart';
-import 'package:backend/src/domain.dart';
-import 'package:backend/src/domain/dtos/wallet_dto.dart';
+import 'package:domain/domain.dart';
 import 'package:backend/src/utils/response_message.dart';
-import 'package:vaden/vaden.dart';
 
 
 @Api(tag: 'wallet')
