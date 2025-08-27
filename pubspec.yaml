@@ -5,4 +5,5 @@ environment:
 workspace: 
   - backend
   - frontend
+  - domain
   
