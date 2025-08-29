@@ -34,6 +34,9 @@ export 'entities/wallet_entity.dart';
 export 'repositories/user_repository.dart';
 export 'repositories/wallet_repository.dart';
 
+// Use cases exports
+export 'usecases/usecases.dart';
+
 @VadenModule([
   ChangePasswordDto,
   CreateUserDto,

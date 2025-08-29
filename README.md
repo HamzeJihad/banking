@@ -9,6 +9,7 @@ BANKING é um sistema completo de carteira digital desenvolvido para facilitar t
 ## 📱 Funcionalidades
 
 ### Para Usuários
+
 - ✅ **Criação de conta** - Registro seguro no sistema
 - 💰 **Gestão de carteira** - Visualização de saldo e histórico
 - 💸 **Transferências** - Envio de créditos entre usuários
@@ -16,6 +17,7 @@ BANKING é um sistema completo de carteira digital desenvolvido para facilitar t
 - 🔐 **Autenticação segura** - Login protegido por JWT
 
 ### Para Administradores
+
 - 👥 **Gestão de usuários** - Controle completo de contas
 - 📈 **Relatórios financeiros** - Acompanhamento de transações
 - 🛡️ **Controle de acesso** - Diferentes níveis de permissão
@@ -34,6 +36,7 @@ BANKING/
 ```
 
 ### 🎯 Domain Package
+
 Centraliza toda a lógica de negócio compartilhada entre frontend e backend:
 
 - **DTOs**: Objetos de transferência de dados
@@ -42,6 +45,7 @@ Centraliza toda a lógica de negócio compartilhada entre frontend e backend:
 - **Parsers**: Conversores de tipos (Decimal, etc.)
 
 ### 🖥️ Backend
+
 API REST construída com o framework Vaden:
 
 - **Controllers**: Endpoints da API
@@ -50,6 +54,7 @@ API REST construída com o framework Vaden:
 - **Database**: Integração com PostgreSQL via Drift ORM
 
 ### 📱 Frontend
+
 Aplicativo móvel desenvolvido em Flutter:
 
 - **Multiplataforma**: iOS, Android, Web
@@ -59,6 +64,7 @@ Aplicativo móvel desenvolvido em Flutter:
 ## 🛠️ Tecnologias Utilizadas
 
 ### Backend
+
 - **[Vaden Framework](https://pub.dev/packages/vaden)** - Framework web para Dart
 - **[Drift ORM](https://pub.dev/packages/drift)** - Object-Relational Mapping
 - **[PostgreSQL](https://www.postgresql.org/)** - Banco de dados relacional
@@ -66,28 +72,33 @@ Aplicativo móvel desenvolvido em Flutter:
 - **[Decimal](https://pub.dev/packages/decimal)** - Precisão decimal para valores monetários
 
 ### Frontend
+
 - **[Flutter](https://flutter.dev/)** - Framework UI multiplataforma
 - **[Dart](https://dart.dev/)** - Linguagem de programação
 
 ### DevOps
+
 - **[Docker](https://www.docker.com/)** - Containerização
 - **[Docker Compose](https://docs.docker.com/compose/)** - Orquestração de containers
 
 ## 🚀 Instalação e Configuração
 
 ### Pré-requisitos
+
 - Dart SDK 3.8.0+
 - Flutter 3.0.0+
 - PostgreSQL 12+
 - Docker (opcional)
 
 ### 1. Clone o repositório
+
 ```bash
 git clone https://github.com/HamzeJihad/banking.git
 cd banking
 ```
 
 ### 2. Configuração do Domain Package
+
 ```bash
 cd domain
 dart pub get
@@ -96,6 +107,7 @@ dart pub get
 ### 3. Configuração do Backend
 
 #### Usando Docker (Recomendado)
+
 ```bash
 cd backend
 docker-compose up -d  # Inicia PostgreSQL
@@ -105,9 +117,11 @@ dart run bin/server.dart
 ```
 
 #### Configuração Manual
+
 1. Configure o PostgreSQL
 2. Edite `backend/application.yaml` com suas credenciais
 3. Execute as migrações:
+
 ```bash
 cd backend
 dart pub get
@@ -116,6 +130,7 @@ dart run bin/server.dart
 ```
 
 ### 4. Configuração do Frontend
+
 ```bash
 cd frontend
 flutter pub get
@@ -125,15 +140,18 @@ flutter run
 ## 📡 API Endpoints
 
 ### Autenticação
+
 - `POST /auth/login` - Login do usuário
 - `POST /auth/refresh` - Renovar token
 
 ### Usuários
+
 - `POST /users/create` - Criar usuário
 - `GET /users/{id}` - Buscar usuário por ID
 - `PUT /users/change-password` - Alterar senha
 
 ### Carteira
+
 - `GET /wallet/byUser` - Buscar carteira do usuário logado
 - `POST /wallet/transfer` - Transferir fundos
 - `GET /wallet/extracts/{page}/{walletId}` - Buscar extrato paginado
@@ -143,6 +161,7 @@ flutter run
 ### Principais Entidades
 
 #### User
+
 ```dart
 class UserEntity {
   final int id;
@@ -156,6 +175,7 @@ class UserEntity {
 ```
 
 #### Wallet
+
 ```dart
 class WalletEntity {
   final int id;
@@ -165,6 +185,7 @@ class WalletEntity {
 ```
 
 #### Transaction
+
 ```dart
 class TransactionEntity {
   final int id;
@@ -186,16 +207,19 @@ class TransactionEntity {
 ## 💰 Casos de Uso
 
 ### Escolas
+
 - Cantinas escolares sem dinheiro físico
 - Eventos e feiras da escola
 - Controle de gastos dos estudantes
 
 ### Eventos
+
 - Festas juninas e festivais
 - Shows e apresentações
 - Feiras e exposições
 
 ### Empresas
+
 - Refeitórios corporativos
 - Eventos internos
 - Sistemas de bonificação
@@ -219,12 +243,14 @@ flutter test
 ## 📦 Build e Deploy
 
 ### Backend
+
 ```bash
 cd backend
 dart compile exe bin/server.dart -o banking-server
 ```
 
 ### Frontend
+
 ```bash
 cd frontend
 # Android
@@ -261,6 +287,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 ## 👨‍💻 Autor
 
 **Hamze Jihad**
+
 - GitHub: [@HamzeJihad](https://github.com/HamzeJihad)
 
 ## 🙏 Agradecimentos

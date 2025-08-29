@@ -5,9 +5,20 @@ import 'package:domain/domain.dart';
 @Api(tag: 'users', description: 'Operations related to users')
 @Controller('/users')
 class UseController {
-  final UserRepository repository;
+  final UserRepository userRepository;
+  final WalletRepository walletRepository;
 
-  UseController(this.repository);
+  // Use case instances
+  late final CreateUserUseCase createUserUseCase;
+  late final GetUserByIdUseCase getUserByIdUseCase;
+  late final ChangePasswordUseCase changePasswordUseCase;
+
+  UseController({required this.userRepository, required this.walletRepository}) {
+    // Initialize use cases
+    createUserUseCase = CreateUserUseCase(userRepository: userRepository, walletRepository: walletRepository);
+    getUserByIdUseCase = GetUserByIdUseCase(userRepository: userRepository);
+    changePasswordUseCase = ChangePasswordUseCase(userRepository: userRepository);
+  }
 
   @ApiOperation(summary: 'Create a new user', description: 'Creates a new user in the system')
   @ApiResponse(
@@ -17,7 +28,7 @@ class UseController {
   )
   @Post('/create')
   Future<UserDto> createUser(@Body() CreateUserDto user) async {
-    final createdUser = await repository.create(user);
+    final createdUser = await createUserUseCase.call(user);
     return UserDto.fromEntity(createdUser);
   }
 
@@ -29,22 +40,20 @@ class UseController {
   )
   @Get('/<id>')
   Future<UserDto> getUserById(@Param('id') int id) async {
-    final user = await repository.getUserById(id);
+    final params = GetUserByIdParams(userId: id);
+    final user = await getUserByIdUseCase.call(params);
     return UserDto.fromEntity(user);
   }
 
-
-
   @ApiOperation(summary: 'Change user password', description: 'Changes the password for a user')
-  @ApiResponse(
-    200,
-    description: 'Password changed successfully',
-  )
+  @ApiResponse(200, description: 'Password changed successfully')
   @Post('/change-password')
-  Future<ResponseMessage> changePassword(@Body() ChangePasswordDto changePassword,
-  @Context() User user,
+  Future<ResponseMessage> changePassword(
+    @Body() ChangePasswordDto changePassword,
+    @Context() User user,
   ) async {
-    await repository.changePassword(user.id, changePassword);
+    final params = ChangePasswordParams(userId: user.id, changePasswordDto: changePassword);
+    await changePasswordUseCase.call(params);
     return ResponseMessage('Password changed successfully');
   }
 }
