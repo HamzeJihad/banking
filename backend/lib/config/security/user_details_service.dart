@@ -3,7 +3,6 @@ import 'package:vaden_security/vaden_security.dart';
 
 @Service()
 class UserDetailsServiceImpl implements UserDetailsService {
-
   final UserRepository _userRepository;
 
   UserDetailsServiceImpl(this._userRepository);
@@ -12,27 +11,20 @@ class UserDetailsServiceImpl implements UserDetailsService {
   Future<UserDetails?> loadUserByUsername(String email) async {
     final user = await _userRepository.getUserByEmail(email);
     if (user != null) {
-      return User(
-        id: user.id,
-        username: user.email,
-        password: user.password,
-        roles: [user.role.name],
-      );
+      return User(id: user.id, email: user.email, password: user.password, role: user.role, name: user.name);
     }
     return null;
   }
 }
 
-
+@DTO()
 class User extends UserDetails {
   final int id;
 
-  String get email => username;
+  final String email;
+  final UserRole role;
+  final String name;
 
-  User({
-    required this.id,
-    required super.password,
-    required super.username,
-    required super.roles,
-  });
+  User({required this.id, required super.password, required this.email, required this.role, required this.name})
+    : super(username: email, roles: [role.name]);
 }

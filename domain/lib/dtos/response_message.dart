@@ -1,4 +1,5 @@
-import 'package:vaden/vaden.dart';
+
+import 'package:vaden_core/vaden_core.dart';
 
 @DTO()
 class ResponseMessage {

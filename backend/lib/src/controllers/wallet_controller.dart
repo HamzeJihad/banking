@@ -1,6 +1,5 @@
 import 'package:backend/config/security/user_details_service.dart';
 import 'package:domain/domain.dart';
-import 'package:backend/src/utils/response_message.dart';
 
 @Api(tag: 'wallet')
 @Controller('/wallet')

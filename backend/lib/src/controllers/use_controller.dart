@@ -1,5 +1,4 @@
 import 'package:backend/config/security/user_details_service.dart';
-import 'package:backend/src/utils/response_message.dart';
 import 'package:domain/domain.dart';
 
 @Api(tag: 'users', description: 'Operations related to users')
@@ -55,5 +54,16 @@ class UseController {
     final params = ChangePasswordParams(userId: user.id, changePasswordDto: changePassword);
     await changePasswordUseCase.call(params);
     return ResponseMessage('Password changed successfully');
+  }
+
+  @ApiOperation(summary: 'Get current user', description: 'Retrieves the currently authenticated user')
+  @ApiResponse(
+    200,
+    description: 'Current user retrieved successfully',
+    content: ApiContent(type: 'json/application', schema: UserDto),
+  )
+  @Get('/me')
+  Future<UserDtoWithlessPassword> getMe(@Context() User user) async {
+    return UserDtoWithlessPassword(id: user.id, email: user.email, name: user.name, role: user.role);
   }
 }
