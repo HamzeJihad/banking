@@ -10,14 +10,16 @@ import 'package:frontend/domain/dto/credentials.dart';
 import 'package:frontend/domain/dto/tokenization.dart';
 import 'package:result_dart/result_dart.dart';
 
+enum AuthState { unknown, authenticated, unauthenticated }
+
 @Repository()
 class AuthRepository {
   final StorageService _storageService;
   final AuthApi _authApi;
   final UserApi _userApi;
 
-  final _isAuthenticated = ValueNotifier<bool>(false);
-  ValueListenable<bool> get isAuthenticated => _isAuthenticated;
+  final _isAuthenticated = ValueNotifier<AuthState>(AuthState.unknown);
+  ValueListenable<AuthState> get isAuthenticated => _isAuthenticated;
   AuthRepository(this._storageService, this._authApi, this._userApi);
 
   AsyncResult<UserDtoWithlessPassword> login(Credentials credentials) async {
@@ -28,10 +30,15 @@ class AuthRepository {
         .flatMap((tokenization) => _storageService.saveData(tokenization))
         .mapError<Exception>((e) => AuthException('Failed to save tokenization'))
         .flatMap(
-          (_) => _userApi.getMe().toAsyncResult().mapError<Exception>(
+          (_) => _userApi.getMe().toAsyncResult()
+        .mapError<Exception>(
             (e) => AuthException('Failed to get logged user'),
-          ),
-        );
+          ) ,
+        ).onSuccess((_) => _isAuthenticated.value = AuthState.authenticated)
+        .onFailure((e){
+          print(e);
+          _isAuthenticated.value = AuthState.unauthenticated;
+        });
   }
 
   AsyncResult<UserDtoWithlessPassword> getLoggedUser() async {
@@ -45,12 +52,15 @@ class AuthRepository {
                 : AuthException('Failed to get logged user'),
           ),
         )
-        .onFailure((_) => _isAuthenticated.value = false)
-        .onSuccess((_) => _isAuthenticated.value = true);
+        .onFailure((e) {
+          print(e);
+          _isAuthenticated.value = AuthState.unauthenticated;
+        })
+        .onSuccess((_) => _isAuthenticated.value = AuthState.authenticated);
   }
 
   AsyncResult<Unit> logout() async {
-    _isAuthenticated.value = false;
+    _isAuthenticated.value = AuthState.unauthenticated;
     return _storageService.delete<Tokenization>();
   }
 }

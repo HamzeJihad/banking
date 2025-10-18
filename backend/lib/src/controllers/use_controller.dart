@@ -31,19 +31,6 @@ class UseController {
     return UserDto.fromEntity(createdUser);
   }
 
-  @ApiOperation(summary: 'Get user by ID', description: 'Retrieves a user by their ID')
-  @ApiResponse(
-    200,
-    description: 'User retrieved successfully',
-    content: ApiContent(type: 'json/application', schema: UserDto),
-  )
-  @Get('/<id>')
-  Future<UserDto> getUserById(@Param('id') int id) async {
-    final params = GetUserByIdParams(userId: id);
-    final user = await getUserByIdUseCase.call(params);
-    return UserDto.fromEntity(user);
-  }
-
   @ApiOperation(summary: 'Change user password', description: 'Changes the password for a user')
   @ApiResponse(200, description: 'Password changed successfully')
   @Post('/change-password')
@@ -66,4 +53,19 @@ class UseController {
   Future<UserDtoWithlessPassword> getMe(@Context() User user) async {
     return UserDtoWithlessPassword(id: user.id, email: user.email, name: user.name, role: user.role);
   }
+
+
+  @ApiOperation(summary: 'Get user by ID', description: 'Retrieves a user by their ID')
+  @ApiResponse(
+    200,
+    description: 'User retrieved successfully',
+    content: ApiContent(type: 'json/application', schema: UserDto),
+  )
+  @Get('/<id>')
+  Future<UserDto> getUserById(@Param('id') int id) async {
+    final params = GetUserByIdParams(userId: id);
+    final user = await getUserByIdUseCase.call(params);
+    return UserDto.fromEntity(user);
+  }
+
 }

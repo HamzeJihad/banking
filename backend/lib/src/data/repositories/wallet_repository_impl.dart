@@ -1,4 +1,6 @@
-import 'package:backend/config/drift/drift_configuration.dart';
+import 'package:backend/config/drift/tables.dart';
+
+
 import 'package:backend/src/data/extensions/user_extesion.dart';
 import 'package:backend/src/data/extensions/wallet_extension.dart';
 import 'package:domain/domain.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_vaden/flutter_vaden.dart';
 import 'package:frontend/core/ui/logo_widget.dart';
-import 'package:go_router/go_router.dart';
+import 'package:frontend/data/repositories/auth_repository.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -11,19 +12,23 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   @override
-  void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 2)).then((value) {
-      if (mounted) {
-        context.go('/login');
-      }
-    });
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _handleSplashLogic();
+  }
+
+  Future<void> _handleSplashLogic() async {
+    await Future.delayed(const Duration(seconds: 2));
+    if (!mounted) return;
+    await context.read<AuthRepository>().getLoggedUser();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Material(child: Center(child: Hero(
-      tag: 'app_logo',
-      child: LogoWidget())));
+    return Material(
+      child: Center(
+        child: Hero(tag: 'app_logo', child: LogoWidget()),
+      ),
+    );
   }
 }

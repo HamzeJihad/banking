@@ -12,8 +12,10 @@ class DioConfiguration {
   @Bean()
   Dio dio(StorageService storageService, AuthApi authApi, AuthRepository authRepository) {
     final dio = Dio(BaseOptions(baseUrl: 'http://localhost:8080'));
-    dio.interceptors.add(LogInterceptor(responseBody: true));
+    
+    dio.interceptors.add(LogInterceptor(responseBody: true, error: true));
     dio.interceptors.add(AuthInterceptor(storageService, authApi, authRepository));
+    
     return dio;
   }
 }
@@ -29,10 +31,17 @@ class AuthInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     final token = await _storageService.getData<Tokenization>().getOrNull();
 
-    if (token != null && options.headers['Authorization'] == null && options.headers['create-user'] != null) {
+    if (token != null && options.headers['Authorization'] == null && options.headers['create-user'] == null) {
       options.headers['Authorization'] = 'Bearer ${token.accessToken}';
     }
+
+    options.headers.remove('create-user');
     handler.next(options);
+  }
+
+@override
+  void onResponse(Response response, ResponseInterceptorHandler handler) async {
+    handler.next(response);
   }
 
   @override

@@ -1,7 +1,7 @@
 
+import 'package:backend/config/drift/tables.dart';
 import 'package:domain/domain.dart';
 
-import '../../../config/drift/drift_configuration.dart';
 
 extension UserTableX on UserTableData {
   UserEntity toEntity() {

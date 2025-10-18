@@ -1,4 +1,4 @@
-import 'package:backend/config/drift/drift_configuration.dart';
+import 'package:backend/config/drift/tables.dart';
 import 'package:domain/domain.dart';
 
 extension WalletTableDataExtension on WalletTableData {

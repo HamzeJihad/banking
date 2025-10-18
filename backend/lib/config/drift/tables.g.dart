@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'drift_configuration.dart';
+part of 'tables.dart';
 
 // ignore_for_file: type=lint
 class $UserTableTable extends UserTable
