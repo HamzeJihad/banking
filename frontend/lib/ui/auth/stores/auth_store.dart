@@ -9,5 +9,4 @@ class AuthStore {
 
   late final loginCommand = Command1(_authRepository.login);
   late final checkAuthCommand = Command0(_authRepository.getLoggedUser);
-  late final logoutCommand = Command0(_authRepository.logout);
 }

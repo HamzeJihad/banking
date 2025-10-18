@@ -18,6 +18,8 @@ import 'package:frontend/data/api/user_api.dart';
 import 'package:frontend/data/api/wallet_api.dart';
 import 'package:frontend/data/services/storage_service.dart';
 import 'package:frontend/domain/dto/tokenization.dart';
+import 'package:frontend/ui/home/stores/home_store.dart';
+import 'package:frontend/ui/splash/stores/splash_store.dart';
 
 import 'dart:convert';
 import 'dart:io';
@@ -55,6 +57,10 @@ class VadenApp extends FlutterVadenApplication {
     _injector.addLazySingleton<WalletApi>(_WalletApi.new);
 
     _injector.addLazySingleton(StorageService.new);
+
+    _injector.addLazySingleton(HomeStore.new);
+
+    _injector.addLazySingleton(SplashStore.new);
 
     _injector.commit();
 

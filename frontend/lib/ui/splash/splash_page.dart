@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vaden/flutter_vaden.dart';
 import 'package:frontend/core/ui/logo_widget.dart';
-import 'package:frontend/data/repositories/auth_repository.dart';
+import 'package:frontend/ui/splash/stores/splash_store.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -20,7 +20,8 @@ class _SplashPageState extends State<SplashPage> {
   Future<void> _handleSplashLogic() async {
     await Future.delayed(const Duration(seconds: 2));
     if (!mounted) return;
-    await context.read<AuthRepository>().getLoggedUser();
+   final store = context.read<SplashStore>();
+   await store.getLoggedUser.execute();
   }
 
   @override

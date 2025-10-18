@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/ui/auth/login_page.dart';
 import 'package:frontend/ui/auth/register_page.dart';
+import 'package:frontend/ui/home/home_page.dart';
 import 'package:frontend/ui/splash/splash_page.dart';
 import 'package:go_router/go_router.dart';
 
@@ -42,6 +43,13 @@ class AppRouter {
         path: '/register',
         builder: (BuildContext context, GoRouterState state) {
           return const RegisterPage();
+        },
+      ),
+
+      GoRoute(
+        path: '/home',
+        builder: (BuildContext context, GoRouterState state) {
+          return const HomePage();
         },
       ),
       GoRoute(
