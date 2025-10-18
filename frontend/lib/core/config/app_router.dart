@@ -1,9 +1,13 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_vaden/flutter_vaden.dart';
 import 'package:frontend/ui/auth/login_page.dart';
 import 'package:frontend/ui/auth/register_page.dart';
+import 'package:frontend/ui/auth/stores/auth_store.dart';
 import 'package:frontend/ui/home/home_page.dart';
+import 'package:frontend/ui/home/stores/home_store.dart';
 import 'package:frontend/ui/splash/splash_page.dart';
+import 'package:frontend/ui/splash/stores/splash_store.dart';
 import 'package:go_router/go_router.dart';
 
 
@@ -29,13 +33,13 @@ class AppRouter {
       GoRoute(
         path: '/splash',
         builder: (BuildContext context, GoRouterState state) {
-          return const SplashPage();
+          return SplashPage(store: context.read<SplashStore>());
         },
       ),
       GoRoute(
         path: '/login',
         builder: (BuildContext context, GoRouterState state) {
-          return const LoginPage();
+          return LoginPage(store: context.read<AuthStore>());
         },
       ),
 
@@ -49,7 +53,7 @@ class AppRouter {
       GoRoute(
         path: '/home',
         builder: (BuildContext context, GoRouterState state) {
-          return const HomePage();
+          return HomePage(homeStore: context.read<HomeStore>());
         },
       ),
       GoRoute(

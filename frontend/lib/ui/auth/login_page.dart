@@ -9,7 +9,9 @@ import 'package:frontend/ui/auth/stores/auth_store.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({super.key, required this.store});
+
+  final AuthStore store;
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -22,8 +24,8 @@ class _LoginPageState extends State<LoginPage> {
   bool _isPasswordVisible = false;
 
   _enter() async {
-    final store = context.read<AuthStore>();
 
+    final store = widget.store;
     if (store.loginCommand.value.isRunning) return;
     await store.loginCommand.execute(credential);
 

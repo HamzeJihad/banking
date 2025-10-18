@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_vaden/flutter_vaden.dart';
 import 'package:frontend/ui/home/stores/home_store.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final HomeStore homeStore;
+  const HomePage({super.key, required this.homeStore});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            final store = context.read<HomeStore>();
+            final store = widget.homeStore;
             store.logoutCommand.execute();
           },
           child: const Text('Logout'),
